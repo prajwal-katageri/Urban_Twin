@@ -1,0 +1,1 @@
+{"zoneId": "dynamic", "events": [], "source": "Open-Meteo Historical Weather API using ERA5-Land reanalysis", "note": "Real historical reanalysis, not an official KSNDMC station observation. Use KSNDMC observations when available for an official station-based analysis."}
