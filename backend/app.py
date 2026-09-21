@@ -1,15 +1,29 @@
 import os
 import math
+import secrets
+from functools import wraps
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from config import Config
-from models import db, Zone, RainfallRecord, SimulationResult
+from models import db, User, Zone, RainfallRecord, SimulationResult
+from storage import storage_is_configured
 
 app = Flask(__name__)
 app.config.from_object(Config)
 CORS(app)
 
 db.init_app(app)
+auth_tokens = {}
+
+def require_auth(handler):
+    @wraps(handler)
+    def protected(*args, **kwargs):
+        token = request.headers.get('Authorization', '').removeprefix('Bearer ').strip()
+        if not token or token not in auth_tokens:
+            return jsonify({'success': False, 'message': 'Authentication required'}), 401
+        request.current_user = auth_tokens[token]
+        return handler(*args, **kwargs)
+    return protected
 
 def seed_database():
     """Seed initial Bengaluru pilot zones and IMD rainfall records."""
@@ -48,13 +62,64 @@ def health():
         'status': 'online',
         'service': 'UrbanTwin Flask REST Backend',
         'database': app.config['SQLALCHEMY_DATABASE_URI'].split('://')[0],
+        'storage': 'configured' if storage_is_configured() else 'not_configured',
         'version': '1.0.0-SIH2026'
     })
+
+@app.route('/api/auth/register', methods=['POST'])
+def register():
+    data = request.get_json() or {}
+    name = str(data.get('name', '')).strip()
+    email = str(data.get('email', '')).strip().lower()
+    password = str(data.get('password', ''))
+    if not name or not email or len(password) < 6:
+        return jsonify({'success': False, 'message': 'Name, email, and a password of at least 6 characters are required'}), 400
+    if User.query.filter_by(email=email).first():
+        return jsonify({'success': False, 'message': 'An account with this email already exists'}), 409
+    user = User(name=name, email=email)
+    user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+    token = secrets.token_urlsafe(32)
+    auth_tokens[token] = user.id
+    return jsonify({'success': True, 'token': token, 'user': user.to_dict()}), 201
+
+@app.route('/api/auth/login', methods=['POST'])
+def login():
+    data = request.get_json() or {}
+    email = str(data.get('email', '')).strip().lower()
+    password = str(data.get('password', ''))
+    user = User.query.filter_by(email=email).first()
+    if not user or not user.check_password(password):
+        return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
+    token = secrets.token_urlsafe(32)
+    auth_tokens[token] = user.id
+    return jsonify({'success': True, 'token': token, 'user': user.to_dict()})
+
+@app.route('/api/auth/me', methods=['GET'])
+@require_auth
+def current_user():
+    user = User.query.get(request.current_user)
+    return jsonify({'success': True, 'user': user.to_dict()})
+
+@app.route('/api/auth/logout', methods=['POST'])
+@require_auth
+def logout():
+    token = request.headers.get('Authorization', '').removeprefix('Bearer ').strip()
+    auth_tokens.pop(token, None)
+    return jsonify({'success': True})
 
 @app.route('/api/zones', methods=['GET'])
 def get_zones():
     zones = Zone.query.all()
-    return jsonify([z.to_dict() for z in zones])
+    return jsonify({'success': True, 'data': [z.to_dict() for z in zones]})
+
+@app.route('/api/zones/<zone_id>', methods=['GET'])
+def get_zone(zone_id):
+    zone = Zone.query.get(zone_id)
+    if not zone:
+        return jsonify({'success': False, 'message': 'Zone not found'}), 404
+    return jsonify({'success': True, 'data': zone.to_dict()})
 
 @app.route('/api/weather/<zone_id>', methods=['GET'])
 def get_weather(zone_id):
@@ -64,6 +129,7 @@ def get_weather(zone_id):
     return jsonify([r.to_dict() for r in records])
 
 @app.route('/api/simulate', methods=['POST'])
+@require_auth
 def simulate():
     data = request.get_json() or {}
     zone_id = data.get('zoneId', 'indiranagar')
@@ -72,9 +138,20 @@ def simulate():
     material_id = intervention.get('materialId', 'concrete')
     floors = int(intervention.get('floors', 10))
     footprint_area = float(intervention.get('footprintArea', 1200))
-    rainfall_rate = float(intervention.get('rainfallRateMmHr', 85))
+    rainfall_rate = float(intervention.get('rainfallRateMmHr', data.get('rainfallMmHr', 85)))
 
-    zone = Zone.query.get(zone_id) or Zone.query.get('indiranagar')
+    zone = Zone.query.get(zone_id)
+    if not zone:
+        fallback_zone = Zone.query.get('indiranagar')
+        zone = Zone(
+            id=zone_id,
+            name='Custom Selected Area',
+            city=fallback_zone.city,
+            center_lat=float(data.get('centerLat', fallback_zone.center_lat)),
+            center_lng=float(data.get('centerLng', fallback_zone.center_lng)),
+            area_km2=max(0.01, float(data.get('studyAreaKm2', fallback_zone.area_km2))),
+            base_elevation=fallback_zone.base_elevation,
+        )
     
     # Run hydrologic accumulation heuristic physics
     runoff_factor = 0.92 if material_id == 'concrete' else (0.35 if material_id == 'permeable' else 0.95)
@@ -124,7 +201,7 @@ def simulate():
             elif point_depth >= 0.5:
                 color, risk = '#eab308', 'moderate'
 
-            flood_points.push = flood_points.append({
+            flood_points.append({
                 'id': f"fp_{r}_{c}",
                 'lat': p_lat,
                 'lng': p_lng,
@@ -134,9 +211,38 @@ def simulate():
                 'radius': max(15, point_depth * 25)
             })
 
+    flood_risk = {
+        'riskScore': min(100, max(5, int(est_max_water_depth * 35))),
+        'riskLevel': 'HIGH' if est_max_water_depth >= 1 else 'MEDIUM',
+        'estMaxWaterDepthM': est_max_water_depth,
+        'affectedAreaKm2': affected_area,
+        'buildingsAtRiskCount': buildings_at_risk,
+        'majorWaterloggingPointsCount': waterlogging_points,
+    }
+
     return jsonify({
         'success': True,
         'isRemote': True,
+        'data': {
+            'simulationCode': f'SIM-{zone.id.upper()}-{sim_run.id}',
+            'dbSimulationId': sim_run.id,
+            'floodRisk': flood_risk,
+            'trafficRisk': {'cutoffRoadsCount': max(1, int(est_max_water_depth * 1.5)), 'affectedRoads': []},
+            'evacuationRoute': {
+                'estimatedTimeMin': int(18 + (est_max_water_depth * 12)),
+                'endPoint': 'Safe Hub',
+                'routeGeometry': [[center_lat - 0.006, center_lng - 0.005], [center_lat + 0.005, center_lng + 0.005]],
+            },
+            'floodRiskPoints': flood_points,
+            'metrics': {
+                'estMaxWaterDepthM': est_max_water_depth,
+                'affectedAreaKm2': affected_area,
+                'buildingsAtRiskCount': buildings_at_risk,
+                'majorWaterloggingPointsCount': waterlogging_points,
+                'cutOffRoadCount': max(1, int(est_max_water_depth * 1.5)),
+                'totalEvacuationTimeMin': int(18 + (est_max_water_depth * 12)),
+            },
+        },
         'zoneId': zone.id,
         'metrics': {
             'estMaxWaterDepthM': est_max_water_depth,

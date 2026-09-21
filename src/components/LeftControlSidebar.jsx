@@ -5,6 +5,8 @@ import { PILOT_ZONES } from '../data/mockData';
 export default function LeftControlSidebar({
   activeZone,
   setActiveZone,
+  customAreaMode,
+  setCustomAreaMode,
   layers,
   setLayers,
   viewMode,
@@ -64,6 +66,21 @@ export default function LeftControlSidebar({
               );
             })}
           </div>
+          <button
+            onClick={() => setCustomAreaMode(!customAreaMode)}
+            className={`w-full px-3 py-2 rounded-lg text-xs font-semibold transition border ${
+              customAreaMode
+                ? 'bg-emerald-600 border-emerald-500 text-white'
+                : 'bg-slate-900 border-slate-700 text-emerald-400 hover:bg-slate-800'
+            }`}
+          >
+            Custom Area Tool
+          </button>
+          <p className={`text-[10px] leading-4 ${customAreaMode ? 'text-emerald-400' : 'text-slate-500'}`}>
+            {customAreaMode
+              ? 'Active: choose the polygon or lasso tool on the map.'
+              : 'Always available for drawing a simulation area.'}
+          </p>
         </div>
       </div>
 

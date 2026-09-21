@@ -8,5 +8,5 @@ set POSTGRES_PASSWORD=npg_4nGMfFDJ1oXe
 set FLASK_SIM_URL=http://localhost:5001
 set CORS_ORIGINS=http://localhost:3000,http://localhost:5173
 
-echo [UrbanTwin] Starting Spring Boot on port 8080...
+echo [UrbanTwin] Starting Spring Boot on port 8082...
 mvn spring-boot:run -q

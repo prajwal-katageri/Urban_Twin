@@ -1,16 +1,64 @@
 /**
  * UrbanTwin API Client
- * Routes all simulation requests through Spring Boot (port 8082)
- * Spring Boot internally calls the Flask simulation engine (port 5001)
+ * Routes all simulation requests through the Flask backend (port 5000)
  */
 
-const SPRING_BOOT_URL = 'http://localhost:8082/api';
+const FLASK_BACKEND_URL = 'http://localhost:5000/api';
+
+const authHeaders = () => {
+  const token = localStorage.getItem('urbantwin_auth_token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+export const login = async (email, password) => {
+  const response = await fetch(`${FLASK_BACKEND_URL}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Login failed');
+  localStorage.setItem('urbantwin_auth_token', data.token);
+  return data.user;
+};
+
+export const register = async (name, email, password) => {
+  const response = await fetch(`${FLASK_BACKEND_URL}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, password }),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Registration failed');
+  localStorage.setItem('urbantwin_auth_token', data.token);
+  return data.user;
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const response = await fetch(`${FLASK_BACKEND_URL}/auth/me`, { headers: authHeaders() });
+    if (!response.ok) return null;
+    return (await response.json()).user;
+  } catch {
+    return null;
+  }
+};
+
+export const logout = async () => {
+  const response = await fetch(`${FLASK_BACKEND_URL}/auth/logout`, {
+    method: 'POST',
+    headers: authHeaders(),
+  });
+  if (!response.ok && response.status !== 401) throw new Error('Logout failed');
+  localStorage.removeItem('urbantwin_auth_token');
+};
 
 export const getBackendConfig = () => {
   const savedUrl = localStorage.getItem('urbantwin_backend_url');
   const isEnabled = localStorage.getItem('urbantwin_backend_enabled');
+  const configuredUrl = savedUrl && !savedUrl.includes(':8082') ? savedUrl : FLASK_BACKEND_URL;
   return {
-    baseUrl: savedUrl || SPRING_BOOT_URL,
+    baseUrl: configuredUrl,
     isEnabled: isEnabled !== null ? isEnabled === 'true' : true, // default ON now
   };
 };
@@ -22,13 +70,13 @@ export const saveBackendConfig = (baseUrl, isEnabled) => {
 
 // --- Health Check ---
 export const checkBackendHealth = async (baseUrl) => {
-  const url = baseUrl || SPRING_BOOT_URL;
+  const url = baseUrl || FLASK_BACKEND_URL;
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 4000);
     const response = await fetch(`${url}/health`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
       signal: controller.signal,
     });
     clearTimeout(timeoutId);
@@ -75,7 +123,7 @@ export const fetchZone = async (zoneId) => {
   }
 };
 
-// --- Run a full simulation (Spring Boot → Flask → DB) ---
+// --- Run a full simulation through Flask ---
 export const runRemoteSimulation = async (payload) => {
   const config = getBackendConfig();
   if (!config.isEnabled) {
@@ -84,16 +132,16 @@ export const runRemoteSimulation = async (payload) => {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 12000);
-    const response = await fetch(`${config.baseUrl}/simulations/run`, {
+    const response = await fetch(`${config.baseUrl}/simulate`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...authHeaders() },
       body: JSON.stringify(payload),
       signal: controller.signal,
     });
     clearTimeout(timeoutId);
     if (response.ok) {
       const json = await response.json();
-      return { success: true, isRemote: true, data: json.data };
+      return { success: true, isRemote: true, data: json.data || json };
     }
     const errJson = await response.json().catch(() => ({}));
     return { success: false, fallbackToLocal: true, reason: errJson.message || `HTTP ${response.status}` };

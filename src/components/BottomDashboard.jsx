@@ -26,6 +26,18 @@ export default function BottomDashboard({ activeZone, simResults }) {
     cutOffRoadCount: 2,
     totalEvacuationTimeMin: 28,
   };
+  const riskScore = Number(metrics.riskScore || simResults?.floodRisk?.riskScore || 50);
+  const affectedRoads = simResults?.roadStatus || activeZone.roads || [];
+  const cutOffRoads = Number(metrics.cutOffRoadCount ?? Math.max(1, Math.round((riskScore / 100) * affectedRoads.length)));
+  const congestionMultiplier = Number(metrics.congestionMultiplier || (1 + riskScore / 100)).toFixed(2);
+  const primaryRoad = affectedRoads.find((road) => road.isCutOff)?.name
+    || affectedRoads[0]?.name
+    || 'Local access corridor';
+  const evacuationHub = simResults?.evacuationHub?.name
+    || activeZone.evacuationHubs?.[0]?.name
+    || 'Nearest safe assembly area';
+  const evacuationTime = Number(metrics.totalEvacuationTimeMin || simResults?.evacuationRoute?.estimatedTimeMin || 28);
+  const safePath = cutOffRoads < Math.max(1, affectedRoads.length) ? 'Available with diversions' : 'Limited; review route';
 
   return (
     <div className="h-64 bg-[#0f172a] border-t border-slate-800 p-4 grid grid-cols-1 md:grid-cols-3 gap-4 shrink-0">
@@ -129,15 +141,15 @@ export default function BottomDashboard({ activeZone, simResults }) {
           <div className="space-y-1.5 text-xs py-1">
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Submerged Cut-Off Roads</span>
-              <span className="font-bold text-rose-400">{metrics.cutOffRoadCount || 2} Corridors</span>
+              <span className="font-bold text-rose-400">{cutOffRoads} Corridors</span>
             </div>
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Congestion Index Multiplier</span>
-              <span className="font-bold text-amber-400">1.85x Delay</span>
+              <span className="font-bold text-amber-400">{congestionMultiplier}x Delay</span>
             </div>
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Primary Rerouted Corridor</span>
-              <span className="font-bold text-slate-100">100ft Main Arterial</span>
+              <span className="font-bold text-slate-100">{primaryRoad}</span>
             </div>
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Emergency Vehicle Access</span>
@@ -150,11 +162,11 @@ export default function BottomDashboard({ activeZone, simResults }) {
           <div className="space-y-1.5 text-xs py-1">
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Est. Evacuation Clearance Time</span>
-              <span className="font-bold text-emerald-300">{metrics.totalEvacuationTimeMin || 28} mins</span>
+              <span className="font-bold text-emerald-300">{evacuationTime} mins</span>
             </div>
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Nearest Evacuation Hub</span>
-              <span className="font-bold text-slate-100">Metro High Ground Deck</span>
+              <span className="font-bold text-slate-100">{evacuationHub}</span>
             </div>
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Assembly Hub Capacity</span>
@@ -162,7 +174,7 @@ export default function BottomDashboard({ activeZone, simResults }) {
             </div>
             <div className="flex justify-between items-center text-slate-300">
               <span className="text-slate-400 text-[11px]">Safe Path Availability</span>
-              <span className="font-bold text-emerald-400">100% Operational</span>
+              <span className="font-bold text-emerald-400">{safePath}</span>
             </div>
           </div>
         )}

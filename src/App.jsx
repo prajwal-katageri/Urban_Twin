@@ -7,12 +7,14 @@ import SimulationSetupSidebar from './components/SimulationSetupSidebar';
 import ScenarioComparison from './components/ScenarioComparison';
 import AnalyticsPanel from './components/AnalyticsPanel';
 import BackendConfigModal from './components/BackendConfigModal';
+import AuthScreen from './components/AuthScreen';
 
 import { PILOT_ZONES } from './data/mockData';
 import { runLocalSimulation } from './services/simulationEngine';
-import { getBackendConfig, checkBackendHealth, runRemoteSimulation } from './services/apiClient';
+import { getBackendConfig, checkBackendHealth, runRemoteSimulation, getCurrentUser, logout } from './services/apiClient';
 
 export default function App() {
+  const [user, setUser] = useState(undefined);
   const [activeZone, setActiveZone] = useState(PILOT_ZONES[0]);
   const [activeTab, setActiveTab] = useState('map'); // 'map' | 'simulate' | 'compare' | 'data' | 'reports'
   const [theme, setTheme] = useState('dark');
@@ -38,11 +40,19 @@ export default function App() {
 
   const [simResults, setSimResults] = useState(null);
   const [isSimulating, setIsSimulating] = useState(false);
+  const [customAreaMode, setCustomAreaMode] = useState(false);
 
   // Backend Device REST Config
   const [backendConfig, setBackendConfig] = useState(getBackendConfig());
   const [backendOnline, setBackendOnline] = useState(false);
   const [isBackendModalOpen, setIsBackendModalOpen] = useState(false);
+
+  useEffect(() => {
+    getCurrentUser().then(setUser).catch(() => setUser(null));
+  }, []);
+
+  if (user === undefined) return <div className="min-h-screen bg-[#0b132b]" />;
+  if (!user) return <AuthScreen onAuthenticated={setUser} />;
 
   // Periodically check Flask backend health if enabled
   useEffect(() => {
@@ -81,6 +91,7 @@ export default function App() {
         rainfallMmHr: intervention.rainfallRateMmHr || 85,
         centerLat: activeZone.center[0],
         centerLng: activeZone.center[1],
+        studyAreaKm2: activeZone.areaKm2,
         intervention: {
           footprintArea: intervention.footprintArea || 1200,
           floors: intervention.floors || 10,
@@ -144,6 +155,16 @@ export default function App() {
     }, 500);
   };
 
+  const handleCustomAreaChange = ({ areaKm2, center }) => {
+    setActiveZone((previousZone) => ({
+      ...previousZone,
+      id: 'custom_draw',
+      name: 'Custom Selected Area',
+      areaKm2,
+      center,
+    }));
+  };
+
   const generateFloodPoints = (centerLat, centerLng, riskScore, maxDepth) => {
     const points = [];
     const step = 0.002;
@@ -181,6 +202,8 @@ export default function App() {
         onOpenBackendModal={() => setIsBackendModalOpen(true)}
         backendConfig={backendConfig}
         backendOnline={backendOnline}
+        user={user}
+        onLogout={() => { logout(); setUser(null); }}
       />
 
       {/* Main 3-Column Layout */}
@@ -189,6 +212,8 @@ export default function App() {
         <LeftControlSidebar
           activeZone={activeZone}
           setActiveZone={setActiveZone}
+          customAreaMode={customAreaMode}
+          setCustomAreaMode={setCustomAreaMode}
           layers={layers}
           setLayers={setLayers}
           viewMode={viewMode}
@@ -204,6 +229,8 @@ export default function App() {
                 activeZone={activeZone}
                 simResults={simResults}
                 layers={layers}
+                customAreaMode={customAreaMode}
+                onDrawnAreaChange={handleCustomAreaChange}
               />
 
               {/* Bottom Dashboard Grid (3 Cards) */}
