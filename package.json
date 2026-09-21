@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:all": "start.bat",
+    "stop:all": "stop.bat"
   },
   "dependencies": {
+    "@neondatabase/neon-js": "^0.7.0-beta",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",

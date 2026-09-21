@@ -57,7 +57,11 @@ UrbanTwin employs a decoupled, microservice-based architecture designed for low 
 flowchart TB
     subgraph Client["Client Layer (Port 5173)"]
         UI["React 18 Dashboard (Vite + Tailwind CSS)"]
+<<<<<<< HEAD
+        GIS["Leaflet GIS & OpenStreetMap Base Layer"]
+=======
         GIS["Leaflet GIS & Google Maps Overlay"]
+>>>>>>> 0a08406b1c9875db23ae2a9dc8ebb50b3133caea
         Charts["Recharts Climate & Risk Analytics"]
         Intervention["Intervention Sandbox & Polygon Drawer"]
     end
@@ -296,7 +300,11 @@ python app.py
 
 ### Root (`.env`)
 ```env
+<<<<<<< HEAD
+# Optional Google Maps API key for satellite tiles
+=======
 # Optional Google Maps API key for hybrid satellite tiles
+>>>>>>> 0a08406b1c9875db23ae2a9dc8ebb50b3133caea
 VITE_GOOGLE_MAPS_API_KEY=AIzaSy...
 ```
 
@@ -485,7 +493,11 @@ jdbc:postgresql://<neon-host>/neondb?sslmode=require
 ```
 
 ### 4. Leaflet Map Tiles Not Loading
+<<<<<<< HEAD
+The standard map uses OpenStreetMap tiles and requires an active internet connection. The map displays the required `© OpenStreetMap contributors` attribution. If using the satellite layer, verify that `VITE_GOOGLE_MAPS_API_KEY` in `.env` is valid.
+=======
 Ensure you have an active internet connection to stream OpenStreetMap tiles. If using the Google Maps hybrid layer, verify that `VITE_GOOGLE_MAPS_API_KEY` in `.env` is valid.
+>>>>>>> 0a08406b1c9875db23ae2a9dc8ebb50b3133caea
 
 ---
 

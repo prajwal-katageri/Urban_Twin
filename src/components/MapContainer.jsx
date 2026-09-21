@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
-import { MousePointer, Square, Circle, Trash2, Plus, Minus } from 'lucide-react';
+import { MousePointer, Square, Circle, Pencil, Trash2, Plus, Minus } from 'lucide-react';
 
-export default function MapContainer({ activeZone, simResults, layers, onDrawnAreaChange }) {
+export default function MapContainer({ activeZone, simResults, layers, onDrawnAreaChange, customAreaMode }) {
   const mapRef = useRef(null);
   const leafletInstanceRef = useRef(null);
   const polygonLayerRef = useRef(null);
   const userDrawMarkersRef = useRef([]);
+  const lassoPreviewRef = useRef(null);
+  const lassoPointsRef = useRef([]);
+  const isLassoDrawingRef = useRef(false);
 
   const [activeTool, setActiveTool] = useState('polygon'); // 'pointer' | 'rect' | 'polygon'
   const [drawnPoints, setDrawnPoints] = useState([]);
@@ -35,15 +38,12 @@ export default function MapContainer({ activeZone, simResults, layers, onDrawnAr
     });
 
     const googleApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
-    let tileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-    let attribution = '&copy; OpenStreetMap';
+    let tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>';
 
     if (layers?.satellite) {
       tileUrl = `https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}${googleApiKey ? `&key=${googleApiKey}` : ''}`;
       attribution = '&copy; Google Maps Satellite';
-    } else {
-      tileUrl = `https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}${googleApiKey ? `&key=${googleApiKey}` : ''}`;
-      attribution = '&copy; Google Maps Roadmap';
     }
 
     L.tileLayer(tileUrl, { maxZoom: 20, attribution }).addTo(map);
@@ -77,10 +77,14 @@ export default function MapContainer({ activeZone, simResults, layers, onDrawnAr
         const next = [...prev, newPoint];
         if (next.length >= 3) {
           renderPolygon(map, next);
-          // Simple polygon area estimation in km2
-          const approxArea = Number((next.length * 0.084).toFixed(2));
+          const areaKm2 = calculatePolygonAreaKm2(next);
+          const center = next.reduce(
+            (sum, point) => [sum[0] + point[0] / next.length, sum[1] + point[1] / next.length],
+            [0, 0]
+          );
+          const approxArea = Number(areaKm2.toFixed(2));
           setCalculatedArea(approxArea);
-          if (onDrawnAreaChange) onDrawnAreaChange(approxArea);
+          if (onDrawnAreaChange) onDrawnAreaChange({ areaKm2: Math.max(0.01, approxArea), center });
         }
         return next;
       });
@@ -91,6 +95,110 @@ export default function MapContainer({ activeZone, simResults, layers, onDrawnAr
       map.off('click', handleMapClick);
     };
   }, [activeTool, onDrawnAreaChange]);
+
+  useEffect(() => {
+    const map = leafletInstanceRef.current;
+    if (!map) return;
+
+    const stopDrawing = () => {
+      isLassoDrawingRef.current = false;
+      lassoPointsRef.current = [];
+      if (lassoPreviewRef.current) {
+        map.removeLayer(lassoPreviewRef.current);
+        lassoPreviewRef.current = null;
+      }
+      map.dragging.enable();
+    };
+
+    const handleMouseDown = (event) => {
+      if (activeTool !== 'lasso') return;
+      isLassoDrawingRef.current = true;
+      lassoPointsRef.current = [event.latlng];
+      map.dragging.disable();
+      lassoPreviewRef.current = L.polyline(lassoPointsRef.current, {
+        color: '#10b981',
+        weight: 3,
+        dashArray: '6 4',
+      }).addTo(map);
+    };
+
+    const handleMouseMove = (event) => {
+      if (!isLassoDrawingRef.current) return;
+      const points = lassoPointsRef.current;
+      const previous = points[points.length - 1];
+      if (previous && map.distance(previous, event.latlng) < 3) return;
+      points.push(event.latlng);
+      lassoPreviewRef.current?.setLatLngs(points);
+    };
+
+    const handleMouseUp = () => {
+      if (!isLassoDrawingRef.current) return;
+      const points = [...lassoPointsRef.current];
+      isLassoDrawingRef.current = false;
+      map.dragging.enable();
+
+      if (lassoPreviewRef.current) {
+        map.removeLayer(lassoPreviewRef.current);
+        lassoPreviewRef.current = null;
+      }
+
+      if (points.length < 3) {
+        lassoPointsRef.current = [];
+        return;
+      }
+
+      renderPolygon(map, points);
+      const areaKm2 = calculatePolygonAreaKm2(points);
+      const center = points.reduce(
+        (sum, point) => [sum[0] + point.lat / points.length, sum[1] + point.lng / points.length],
+        [0, 0]
+      );
+      const selectedArea = Number(areaKm2.toFixed(2));
+      setDrawnPoints(points.map((point) => [point.lat, point.lng]));
+      setCalculatedArea(selectedArea);
+      onDrawnAreaChange?.({ areaKm2: Math.max(0.01, selectedArea), center });
+      lassoPointsRef.current = [];
+    };
+
+    map.on('mousedown', handleMouseDown);
+    map.on('mousemove', handleMouseMove);
+    map.on('mouseup', handleMouseUp);
+    map.on('mouseout', handleMouseUp);
+
+    return () => {
+      map.off('mousedown', handleMouseDown);
+      map.off('mousemove', handleMouseMove);
+      map.off('mouseup', handleMouseUp);
+      map.off('mouseout', handleMouseUp);
+      stopDrawing();
+    };
+  }, [activeTool, onDrawnAreaChange]);
+
+  useEffect(() => {
+    if (customAreaMode) setActiveTool('polygon');
+  }, [customAreaMode]);
+
+  const calculatePolygonAreaKm2 = (points) => {
+    const earthRadiusKm = 6371;
+    const degreeScale = Math.PI / 180;
+    let area = 0;
+
+    for (let index = 0; index < points.length; index += 1) {
+      const current = points[index];
+      const next = points[(index + 1) % points.length];
+      const currentLat = Array.isArray(current) ? current[0] : current.lat;
+      const currentLng = Array.isArray(current) ? current[1] : current.lng;
+      const nextLat = Array.isArray(next) ? next[0] : next.lat;
+      const nextLng = Array.isArray(next) ? next[1] : next.lng;
+      const currentX = earthRadiusKm * currentLng * degreeScale * Math.cos(currentLat * degreeScale);
+      const currentY = earthRadiusKm * currentLat * degreeScale;
+      const nextX = earthRadiusKm * nextLng * degreeScale * Math.cos(nextLat * degreeScale);
+      const nextY = earthRadiusKm * nextLat * degreeScale;
+      area += currentX * nextY - nextX * currentY;
+    }
+
+    return Math.abs(area) / 2;
+  };
 
   const renderPolygon = (map, points) => {
     if (polygonLayerRef.current) map.removeLayer(polygonLayerRef.current);
@@ -137,7 +245,7 @@ export default function MapContainer({ activeZone, simResults, layers, onDrawnAr
       <div ref={mapRef} className="w-full h-full" />
 
       {/* Top Left Drawing Toolbar */}
-      <div className="absolute top-4 left-4 z-20 bg-white shadow-lg rounded-lg p-1 flex flex-col space-y-1 border border-slate-200">
+      <div className="absolute top-4 left-4 z-[1000] pointer-events-auto bg-white shadow-lg rounded-lg p-1 flex flex-col space-y-1 border border-slate-200">
         <button
           onClick={() => setActiveTool('pointer')}
           className={`p-2 rounded hover:bg-slate-100 ${activeTool === 'pointer' ? 'bg-slate-100 text-blue-600 font-bold' : 'text-slate-700'}`}
@@ -159,6 +267,13 @@ export default function MapContainer({ activeZone, simResults, layers, onDrawnAr
         >
           <Circle className="w-4 h-4" />
         </button>
+        <button
+          onClick={() => setActiveTool('lasso')}
+          className={`p-2 rounded hover:bg-slate-100 ${activeTool === 'lasso' ? 'bg-slate-100 text-emerald-600 font-bold' : 'text-slate-700'}`}
+          title="Freehand Lasso Selection"
+        >
+          <Pencil className="w-4 h-4" />
+        </button>
         <div className="h-px bg-slate-200 my-1" />
         <button
           onClick={handleClearDrawings}
@@ -170,7 +285,7 @@ export default function MapContainer({ activeZone, simResults, layers, onDrawnAr
       </div>
 
       {/* Top Right Zoom Controls */}
-      <div className="absolute top-4 right-4 z-20 bg-white shadow-lg rounded-lg p-1 flex flex-col space-y-1 border border-slate-200">
+      <div className="absolute top-4 right-4 z-[1000] pointer-events-auto bg-white shadow-lg rounded-lg p-1 flex flex-col space-y-1 border border-slate-200">
         <button onClick={handleZoomIn} className="p-1.5 rounded hover:bg-slate-100 text-slate-700">
           <Plus className="w-4 h-4" />
         </button>

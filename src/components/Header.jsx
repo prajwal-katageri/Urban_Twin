@@ -8,7 +8,9 @@ export default function Header({
   setTheme,
   onOpenBackendModal,
   backendConfig,
-  backendOnline
+  backendOnline,
+  user,
+  onLogout
 }) {
   return (
     <header className="bg-[#111827] border-b border-slate-800 px-5 py-2.5 flex items-center justify-between z-30 shrink-0">
@@ -125,10 +127,11 @@ export default function Header({
             <User className="w-3.5 h-3.5" />
           </div>
           <div>
-            <span className="text-slate-200 font-semibold block text-[11px] leading-tight">Guest</span>
-            <span className="text-[9px] text-slate-400 block leading-none">Prototype Mode</span>
+            <span className="text-slate-200 font-semibold block text-[11px] leading-tight">{user?.name || 'User'}</span>
+            <span className="text-[9px] text-slate-400 block leading-none">Authenticated</span>
           </div>
         </div>
+        <button onClick={onLogout} className="text-[10px] text-slate-400 hover:text-white">Sign out</button>
       </div>
     </header>
   );
