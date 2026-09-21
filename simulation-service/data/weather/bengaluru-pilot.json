@@ -1,0 +1,67 @@
+{
+  "zoneId": "bengaluru-pilot",
+  "label": "Representative Historical-Pattern Demo Data",
+  "period": "2015\u20132024",
+  "events": [
+    {
+      "year": 2015,
+      "rainfallMm": 92,
+      "durationHours": 6,
+      "label": "Moderate monsoon"
+    },
+    {
+      "year": 2016,
+      "rainfallMm": 135,
+      "durationHours": 6,
+      "label": "Heavy monsoon"
+    },
+    {
+      "year": 2017,
+      "rainfallMm": 110,
+      "durationHours": 5,
+      "label": "Heavy monsoon"
+    },
+    {
+      "year": 2018,
+      "rainfallMm": 168,
+      "durationHours": 6,
+      "label": "Very heavy event"
+    },
+    {
+      "year": 2019,
+      "rainfallMm": 145,
+      "durationHours": 6,
+      "label": "Heavy monsoon"
+    },
+    {
+      "year": 2020,
+      "rainfallMm": 88,
+      "durationHours": 5,
+      "label": "Moderate monsoon"
+    },
+    {
+      "year": 2021,
+      "rainfallMm": 125,
+      "durationHours": 6,
+      "label": "Heavy monsoon"
+    },
+    {
+      "year": 2022,
+      "rainfallMm": 104,
+      "durationHours": 5,
+      "label": "Moderate monsoon"
+    },
+    {
+      "year": 2023,
+      "rainfallMm": 152,
+      "durationHours": 6,
+      "label": "Very heavy event"
+    },
+    {
+      "year": 2024,
+      "rainfallMm": 118,
+      "durationHours": 6,
+      "label": "Heavy monsoon"
+    }
+  ]
+}

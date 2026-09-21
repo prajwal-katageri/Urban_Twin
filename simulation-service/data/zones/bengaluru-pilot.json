@@ -1,0 +1,1757 @@
+{
+  "id": "bengaluru-pilot",
+  "name": "Bengaluru Pilot Zone",
+  "description": "Representative urban pilot area for hackathon demonstration.",
+  "dataLabel": "Representative Demo Data",
+  "bounds": [
+    [
+      77.55,
+      12.96
+    ],
+    [
+      77.562,
+      12.972
+    ]
+  ],
+  "elevationGrid": [
+    [
+      918.0,
+      917.3,
+      916.4,
+      915.3,
+      913.1,
+      910.7,
+      908.6,
+      906.8,
+      905.5,
+      904.8,
+      904.6,
+      904.6
+    ],
+    [
+      915.2,
+      914.5,
+      913.2,
+      910.8,
+      908.3,
+      905.8,
+      903.6,
+      901.8,
+      900.5,
+      899.9,
+      899.8,
+      900.1
+    ],
+    [
+      912.4,
+      911.3,
+      908.8,
+      906.2,
+      903.5,
+      901.0,
+      898.6,
+      896.8,
+      895.5,
+      895.0,
+      895.0,
+      895.5
+    ],
+    [
+      909.6,
+      907.1,
+      904.5,
+      901.7,
+      898.9,
+      896.2,
+      893.7,
+      891.8,
+      890.6,
+      890.2,
+      890.4,
+      891.1
+    ],
+    [
+      906.0,
+      903.2,
+      900.4,
+      897.5,
+      894.4,
+      891.5,
+      888.8,
+      886.8,
+      885.7,
+      885.5,
+      885.9,
+      886.8
+    ],
+    [
+      902.4,
+      899.6,
+      896.7,
+      893.5,
+      890.2,
+      886.9,
+      883.9,
+      881.8,
+      880.9,
+      881.0,
+      881.7,
+      882.9
+    ],
+    [
+      899.2,
+      896.3,
+      893.2,
+      890.0,
+      886.5,
+      882.8,
+      879.3,
+      876.8,
+      876.2,
+      876.9,
+      878.0,
+      879.3
+    ],
+    [
+      896.2,
+      893.3,
+      890.2,
+      886.9,
+      883.3,
+      879.5,
+      875.6,
+      871.8,
+      872.5,
+      873.5,
+      874.8,
+      876.2
+    ],
+    [
+      893.6,
+      890.7,
+      887.6,
+      884.4,
+      880.9,
+      877.2,
+      873.7,
+      871.2,
+      870.6,
+      871.3,
+      872.4,
+      873.7
+    ],
+    [
+      891.2,
+      888.4,
+      885.5,
+      882.3,
+      879.0,
+      875.7,
+      872.7,
+      870.6,
+      869.7,
+      869.8,
+      870.5,
+      871.7
+    ],
+    [
+      889.2,
+      886.4,
+      883.6,
+      880.7,
+      877.6,
+      874.7,
+      872.0,
+      870.0,
+      868.9,
+      868.7,
+      869.1,
+      870.0
+    ],
+    [
+      887.2,
+      884.7,
+      882.1,
+      879.3,
+      876.5,
+      873.8,
+      871.3,
+      869.4,
+      868.2,
+      867.8,
+      868.0,
+      868.7
+    ]
+  ],
+  "landUseGrid": [
+    [
+      "SOIL",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "SOIL",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "SOIL",
+      "VEGETATION"
+    ],
+    [
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "SOIL",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION"
+    ],
+    [
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "SOIL",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION"
+    ],
+    [
+      "VEGETATION",
+      "VEGETATION",
+      "SOIL",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "SOIL",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION"
+    ],
+    [
+      "VEGETATION",
+      "SOIL",
+      "VEGETATION",
+      "ROAD",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "ROAD",
+      "VEGETATION",
+      "SOIL"
+    ],
+    [
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD"
+    ],
+    [
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD",
+      "ROAD"
+    ],
+    [
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION"
+    ],
+    [
+      "VEGETATION",
+      "VEGETATION",
+      "SOIL",
+      "ROAD",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "CONCRETE",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION"
+    ],
+    [
+      "VEGETATION",
+      "SOIL",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION",
+      "SOIL",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "SOIL"
+    ],
+    [
+      "SOIL",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "SOIL",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "SOIL",
+      "VEGETATION"
+    ],
+    [
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "SOIL",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "VEGETATION",
+      "ROAD",
+      "VEGETATION",
+      "VEGETATION"
+    ]
+  ],
+  "roads": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R1",
+          "name": "Outer North",
+          "width": 8,
+          "trafficVolume": 350,
+          "speedKph": 28,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.55,
+              12.96
+            ],
+            [
+              77.56099999999999,
+              12.96
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R2",
+          "name": "Outer South",
+          "width": 8,
+          "trafficVolume": 420,
+          "speedKph": 32,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.55,
+              12.971
+            ],
+            [
+              77.56099999999999,
+              12.971
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R3",
+          "name": "Outer West",
+          "width": 8,
+          "trafficVolume": 490,
+          "speedKph": 36,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.55,
+              12.96
+            ],
+            [
+              77.55,
+              12.971
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R4",
+          "name": "Outer East",
+          "width": 8,
+          "trafficVolume": 560,
+          "speedKph": 28,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.56099999999999,
+              12.96
+            ],
+            [
+              77.56099999999999,
+              12.971
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R5",
+          "name": "North Connector",
+          "width": 8,
+          "trafficVolume": 630,
+          "speedKph": 32,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.55,
+              12.963000000000001
+            ],
+            [
+              77.56099999999999,
+              12.963000000000001
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R6",
+          "name": "Central Avenue",
+          "width": 10,
+          "trafficVolume": 700,
+          "speedKph": 36,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.55,
+              12.966000000000001
+            ],
+            [
+              77.56099999999999,
+              12.966000000000001
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R7",
+          "name": "South Connector",
+          "width": 8,
+          "trafficVolume": 770,
+          "speedKph": 28,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.55,
+              12.969000000000001
+            ],
+            [
+              77.56099999999999,
+              12.969000000000001
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R8",
+          "name": "Market Road",
+          "width": 8,
+          "trafficVolume": 840,
+          "speedKph": 32,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.553,
+              12.96
+            ],
+            [
+              77.553,
+              12.971
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R9",
+          "name": "Lake Road",
+          "width": 8,
+          "trafficVolume": 910,
+          "speedKph": 36,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.556,
+              12.96
+            ],
+            [
+              77.556,
+              12.971
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "R10",
+          "name": "Ring Link",
+          "width": 8,
+          "trafficVolume": 980,
+          "speedKph": 28,
+          "lengthKm": 1.1
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.559,
+              12.96
+            ],
+            [
+              77.559,
+              12.971
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "buildings": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B1",
+          "name": "Building 1",
+          "floors": 3,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55115,
+                12.962150000000001
+              ],
+              [
+                77.55170000000001,
+                12.962150000000001
+              ],
+              [
+                77.55170000000001,
+                12.962650000000002
+              ],
+              [
+                77.55115,
+                12.962650000000002
+              ],
+              [
+                77.55115,
+                12.962150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B2",
+          "name": "Building 2",
+          "floors": 4,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55215,
+                12.962150000000001
+              ],
+              [
+                77.5527,
+                12.962150000000001
+              ],
+              [
+                77.5527,
+                12.962650000000002
+              ],
+              [
+                77.55215,
+                12.962650000000002
+              ],
+              [
+                77.55215,
+                12.962150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B3",
+          "name": "Building 3",
+          "floors": 5,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55415,
+                12.962150000000001
+              ],
+              [
+                77.55470000000001,
+                12.962150000000001
+              ],
+              [
+                77.55470000000001,
+                12.962650000000002
+              ],
+              [
+                77.55415,
+                12.962650000000002
+              ],
+              [
+                77.55415,
+                12.962150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B4",
+          "name": "Building 4",
+          "floors": 6,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55515,
+                12.962150000000001
+              ],
+              [
+                77.5557,
+                12.962150000000001
+              ],
+              [
+                77.5557,
+                12.962650000000002
+              ],
+              [
+                77.55515,
+                12.962650000000002
+              ],
+              [
+                77.55515,
+                12.962150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B5",
+          "name": "Building 5",
+          "floors": 7,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55715000000001,
+                12.962150000000001
+              ],
+              [
+                77.55770000000001,
+                12.962150000000001
+              ],
+              [
+                77.55770000000001,
+                12.962650000000002
+              ],
+              [
+                77.55715000000001,
+                12.962650000000002
+              ],
+              [
+                77.55715000000001,
+                12.962150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B6",
+          "name": "Building 6",
+          "floors": 8,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55815,
+                12.962150000000001
+              ],
+              [
+                77.5587,
+                12.962150000000001
+              ],
+              [
+                77.5587,
+                12.962650000000002
+              ],
+              [
+                77.55815,
+                12.962650000000002
+              ],
+              [
+                77.55815,
+                12.962150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B7",
+          "name": "Building 7",
+          "floors": 9,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.56015000000001,
+                12.962150000000001
+              ],
+              [
+                77.56070000000001,
+                12.962150000000001
+              ],
+              [
+                77.56070000000001,
+                12.962650000000002
+              ],
+              [
+                77.56015000000001,
+                12.962650000000002
+              ],
+              [
+                77.56015000000001,
+                12.962150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B8",
+          "name": "Building 8",
+          "floors": 10,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55115,
+                12.96415
+              ],
+              [
+                77.55170000000001,
+                12.96415
+              ],
+              [
+                77.55170000000001,
+                12.96465
+              ],
+              [
+                77.55115,
+                12.96465
+              ],
+              [
+                77.55115,
+                12.96415
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B9",
+          "name": "Building 9",
+          "floors": 2,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55215,
+                12.96415
+              ],
+              [
+                77.5527,
+                12.96415
+              ],
+              [
+                77.5527,
+                12.96465
+              ],
+              [
+                77.55215,
+                12.96465
+              ],
+              [
+                77.55215,
+                12.96415
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B10",
+          "name": "Building 10",
+          "floors": 3,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55415,
+                12.96415
+              ],
+              [
+                77.55470000000001,
+                12.96415
+              ],
+              [
+                77.55470000000001,
+                12.96465
+              ],
+              [
+                77.55415,
+                12.96465
+              ],
+              [
+                77.55415,
+                12.96415
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B11",
+          "name": "Building 11",
+          "floors": 4,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55715000000001,
+                12.96415
+              ],
+              [
+                77.55770000000001,
+                12.96415
+              ],
+              [
+                77.55770000000001,
+                12.96465
+              ],
+              [
+                77.55715000000001,
+                12.96465
+              ],
+              [
+                77.55715000000001,
+                12.96415
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B12",
+          "name": "Building 12",
+          "floors": 5,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55815,
+                12.96415
+              ],
+              [
+                77.5587,
+                12.96415
+              ],
+              [
+                77.5587,
+                12.96465
+              ],
+              [
+                77.55815,
+                12.96465
+              ],
+              [
+                77.55815,
+                12.96415
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B13",
+          "name": "Building 13",
+          "floors": 6,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.56015000000001,
+                12.96415
+              ],
+              [
+                77.56070000000001,
+                12.96415
+              ],
+              [
+                77.56070000000001,
+                12.96465
+              ],
+              [
+                77.56015000000001,
+                12.96465
+              ],
+              [
+                77.56015000000001,
+                12.96415
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B14",
+          "name": "Building 14",
+          "floors": 7,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55115,
+                12.965150000000001
+              ],
+              [
+                77.55170000000001,
+                12.965150000000001
+              ],
+              [
+                77.55170000000001,
+                12.965650000000002
+              ],
+              [
+                77.55115,
+                12.965650000000002
+              ],
+              [
+                77.55115,
+                12.965150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B15",
+          "name": "Building 15",
+          "floors": 8,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55215,
+                12.965150000000001
+              ],
+              [
+                77.5527,
+                12.965150000000001
+              ],
+              [
+                77.5527,
+                12.965650000000002
+              ],
+              [
+                77.55215,
+                12.965650000000002
+              ],
+              [
+                77.55215,
+                12.965150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B16",
+          "name": "Building 16",
+          "floors": 9,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55415,
+                12.965150000000001
+              ],
+              [
+                77.55470000000001,
+                12.965150000000001
+              ],
+              [
+                77.55470000000001,
+                12.965650000000002
+              ],
+              [
+                77.55415,
+                12.965650000000002
+              ],
+              [
+                77.55415,
+                12.965150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B17",
+          "name": "Building 17",
+          "floors": 10,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55515,
+                12.965150000000001
+              ],
+              [
+                77.5557,
+                12.965150000000001
+              ],
+              [
+                77.5557,
+                12.965650000000002
+              ],
+              [
+                77.55515,
+                12.965650000000002
+              ],
+              [
+                77.55515,
+                12.965150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B18",
+          "name": "Building 18",
+          "floors": 2,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55715000000001,
+                12.965150000000001
+              ],
+              [
+                77.55770000000001,
+                12.965150000000001
+              ],
+              [
+                77.55770000000001,
+                12.965650000000002
+              ],
+              [
+                77.55715000000001,
+                12.965650000000002
+              ],
+              [
+                77.55715000000001,
+                12.965150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B19",
+          "name": "Building 19",
+          "floors": 3,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55815,
+                12.965150000000001
+              ],
+              [
+                77.5587,
+                12.965150000000001
+              ],
+              [
+                77.5587,
+                12.965650000000002
+              ],
+              [
+                77.55815,
+                12.965650000000002
+              ],
+              [
+                77.55815,
+                12.965150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B20",
+          "name": "Building 20",
+          "floors": 4,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.56015000000001,
+                12.965150000000001
+              ],
+              [
+                77.56070000000001,
+                12.965150000000001
+              ],
+              [
+                77.56070000000001,
+                12.965650000000002
+              ],
+              [
+                77.56015000000001,
+                12.965650000000002
+              ],
+              [
+                77.56015000000001,
+                12.965150000000001
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B21",
+          "name": "Building 21",
+          "floors": 5,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55115,
+                12.96715
+              ],
+              [
+                77.55170000000001,
+                12.96715
+              ],
+              [
+                77.55170000000001,
+                12.96765
+              ],
+              [
+                77.55115,
+                12.96765
+              ],
+              [
+                77.55115,
+                12.96715
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B22",
+          "name": "Building 22",
+          "floors": 6,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55215,
+                12.96715
+              ],
+              [
+                77.5527,
+                12.96715
+              ],
+              [
+                77.5527,
+                12.96765
+              ],
+              [
+                77.55215,
+                12.96765
+              ],
+              [
+                77.55215,
+                12.96715
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B23",
+          "name": "Building 23",
+          "floors": 7,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55415,
+                12.96715
+              ],
+              [
+                77.55470000000001,
+                12.96715
+              ],
+              [
+                77.55470000000001,
+                12.96765
+              ],
+              [
+                77.55415,
+                12.96765
+              ],
+              [
+                77.55415,
+                12.96715
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B24",
+          "name": "Building 24",
+          "floors": 8,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55515,
+                12.96715
+              ],
+              [
+                77.5557,
+                12.96715
+              ],
+              [
+                77.5557,
+                12.96765
+              ],
+              [
+                77.55515,
+                12.96765
+              ],
+              [
+                77.55515,
+                12.96715
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B25",
+          "name": "Building 25",
+          "floors": 9,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55815,
+                12.96715
+              ],
+              [
+                77.5587,
+                12.96715
+              ],
+              [
+                77.5587,
+                12.96765
+              ],
+              [
+                77.55815,
+                12.96765
+              ],
+              [
+                77.55815,
+                12.96715
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B26",
+          "name": "Building 26",
+          "floors": 10,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.56015000000001,
+                12.96715
+              ],
+              [
+                77.56070000000001,
+                12.96715
+              ],
+              [
+                77.56070000000001,
+                12.96765
+              ],
+              [
+                77.56015000000001,
+                12.96765
+              ],
+              [
+                77.56015000000001,
+                12.96715
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B27",
+          "name": "Building 27",
+          "floors": 2,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55115,
+                12.96815
+              ],
+              [
+                77.55170000000001,
+                12.96815
+              ],
+              [
+                77.55170000000001,
+                12.96865
+              ],
+              [
+                77.55115,
+                12.96865
+              ],
+              [
+                77.55115,
+                12.96815
+              ]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "B28",
+          "name": "Building 28",
+          "floors": 3,
+          "use": "Mixed Use"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                77.55215,
+                12.96815
+              ],
+              [
+                77.5527,
+                12.96815
+              ],
+              [
+                77.5527,
+                12.96865
+              ],
+              [
+                77.55215,
+                12.96865
+              ],
+              [
+                77.55215,
+                12.96815
+              ]
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "drainage": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "D1",
+          "name": "Drain 1",
+          "capacity": 45
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.551,
+              12.964
+            ],
+            [
+              77.551,
+              12.966000000000001
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "D2",
+          "name": "Drain 2",
+          "capacity": 50
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.553,
+              12.964
+            ],
+            [
+              77.55799999999999,
+              12.964
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "D3",
+          "name": "Drain 3",
+          "capacity": 50
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.55199999999999,
+              12.966000000000001
+            ],
+            [
+              77.559,
+              12.966000000000001
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "D4",
+          "name": "Drain 4",
+          "capacity": 40
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.551,
+              12.968
+            ],
+            [
+              77.557,
+              12.968
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "D5",
+          "name": "Drain 5",
+          "capacity": 60
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.553,
+              12.97
+            ],
+            [
+              77.56,
+              12.97
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "id": "D6",
+          "name": "Drain 6",
+          "capacity": 55
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              77.556,
+              12.967
+            ],
+            [
+              77.556,
+              12.971
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "grid": {
+    "rows": 12,
+    "cols": 12,
+    "cellSizeM": 100
+  },
+  "sources": {
+    "weather": "Representative Historical-Pattern Demo Data; IMD-compatible schema",
+    "terrain": "DEM-compatible representative grid",
+    "roads": "OpenStreetMap-compatible GeoJSON structure",
+    "buildings": "Representative GeoJSON",
+    "drainage": "Representative GeoJSON"
+  }
+}
